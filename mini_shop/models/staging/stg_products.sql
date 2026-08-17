@@ -1,6 +1,6 @@
 SELECT 
     product_id, 
-    "product category", 
+    "product category" as product_category, 
     product_name_length, 
     product_description_length, 
     product_photos_qty, 

@@ -12,6 +12,13 @@ models:
         data_tests:
           - not_null
 
+  - name: stg_orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - unique
+        
       - name: customer_id
         data_tests:
           - not_null
@@ -19,9 +26,20 @@ models:
               arguments:
                 to: ref('stg_customers')
                 field: customer_id
-                
+                  
       - name: order_status
         data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - shipped
+                  - unavailable
+                  - invoiced
+                  - created
+                  - approved
+                  - processing
+                  - delivered
+                  - canceled
 
     
