@@ -14,7 +14,7 @@ mini_shop/                     dbt project root
 │   ├── staging/                1:1 cleaned views over each seed (stg_*)
 │   │   └── intermediate/       ephemeral join/dedup logic (int_*)
 │   ├── mart/                   fct_orders (incremental fact table)
-│   └── practice/               scratch models for trying out Jinja
+│   └── jinja/                  Jinja practice models (set, if, for loop)
 ├── marts/                      mart_product_sales (aggregated, ephemeral)
 ├── snapshots/                  customers_check_scd (type-2 style tracking)
 ├── tests/                      custom singular data tests
@@ -36,6 +36,12 @@ mini_shop/                     dbt project root
 **Marts**:
 - `fct_orders` (`models/mart/`) — incremental fact table of orders; on incremental runs, re-scans the last 7 days based on `order_purchase_timestamp`.
 - `mart_product_sales` (`marts/`) — items sold and total revenue per product category, built on `int_order_items_enriched`.
+
+**Jinja practice** (`models/jinja/`) — small models for learning Jinja in dbt:
+- `include_cancelled` — `{% set %}` flag + `{% if %}` to conditionally filter out cancelled orders.
+- `max_values` — `{% for %}` loop over a list of payment columns to generate `MAX(...)` aggregates, using `loop.last` to handle commas.
+- `min_order_value` — variable-driven threshold (50) filtering payments joined to orders.
+- `tax_rate` — variable-driven tax rate (0.20) to compute `order_value_with_tax`.
 
 **Snapshots** (`snapshots/`):
 - `customers_check_scd` — check-strategy snapshot over `int_customer_record_latest`, tracking changes to `customer_zip_code_prefix`, `customer_city`, `customer_state`.
